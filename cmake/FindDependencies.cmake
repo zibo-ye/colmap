@@ -112,7 +112,7 @@ if(CUDA_ENABLED)
             set(CUDAToolkit_BIN_DIR "${CUDA_TOOLKIT_ROOT_DIR}/bin")
         endif()
     else()
-        find_package(CUDAToolkit QUIET)
+        find_package(CUDAToolkit)
         if(CUDAToolkit_FOUND)
             set(CUDA_FOUND ON)
             enable_language(CUDA)
@@ -121,6 +121,8 @@ if(CUDA_ENABLED)
 endif()
 
 if(CUDA_ENABLED AND CUDA_FOUND)
+    set(CMAKE_CUDA_ARCHITECTURES native)
+
     if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
         message(
             FATAL_ERROR "You must set CMAKE_CUDA_ARCHITECTURES to e.g. 'native', 'all-major', '70', etc. "

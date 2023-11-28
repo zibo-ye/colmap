@@ -35,3 +35,9 @@ COLMAP_ADD_LIBRARY(
         GLEW::GLEW
         ${OPTIONAL_CUDA_LINK_LIBS}
 )
+
+# Hack for the extra \EHsc that gets added on Windows to the nvcc compile line, which causes the error:
+# "nvcc fatal: A single input file is required for a non-link phase when an outputfile is specified..."
+if(IS_MSVC)
+    set_target_properties(colmap_sift_gpu PROPERTIES COMPILE_OPTIONS -Xcompiler)
+endif()
